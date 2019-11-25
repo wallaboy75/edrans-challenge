@@ -18,7 +18,7 @@ var router = function(app) {
         });
     });
  
-    app.post("/carreras", function(request, response) {
+    app.post("/carrera", function(request, response) {
         var carrera = new CarreraModel({
             "nombre": request.body.nombre,
             "tituloOtorgado": request.body.tituloOtorgado

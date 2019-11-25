@@ -1,8 +1,7 @@
 const Mongoose  = require("mongoose");
-const Schema    = Mongoose.Schema;
 const ObjectId  = Mongoose.SchemaTypes.ObjectId;
 
-const CarreraSchema = new Mongoose.Schema({
+/*const CarreraSchema = new Mongoose.Schema({
     nombre: String,
     tituloOtorgado: String,
     materias: [
@@ -17,9 +16,15 @@ const CarreraSchema = new Mongoose.Schema({
             ref:    AlumnoSchema
         }
     ]
+});*/
+
+const CarreraSchema = new Mongoose.Schema({
+    nombre: String,
+    tituloOtorgado: String
 });
 
-const MateriaSchema = new Mongoose.Schema({
+const Carrera = Mongoose.model('Carrera', CarreraSchema);
+/*const MateriaSchema = new Mongoose.Schema({
     nombre: String,
     cargaHoraria: Number,
     alumnos: [
@@ -34,9 +39,43 @@ const MateriaSchema = new Mongoose.Schema({
             ref:    CarreraSchema
         }
     ]
+});*/
+const materiaCarreraSchema = new Mongoose.Schema({
+  _id: { type: ObjectId, ref: 'Carrera' },
+  nombre: String
 });
- 
-const AlumnoSchema = new Mongoose.Schema({
+
+const MateriaSchema = new Mongoose.Schema({
+    nombre: String,
+    cargaHoraria: Number,
+    carreras: [materiaCarreraSchema]
+});
+
+const Materia = Mongoose.model('Materia', MateriaSchema);
+
+const alumnoCarreraSchema = new Mongoose.Schema({
+  _id: { type: ObjectId, ref: 'Carrera' },
+  nombre: String
+});
+
+const alumnoMateriaSchema = new Mongoose.Schema({
+  _id: { type: ObjectId, ref: 'Materia' },
+  nombre: String,
+  estadoCursado: String,
+  notaObtenida: Number
+});
+
+const alumnoSchema = new Mongoose.Schema({
+  nombre: String,
+  fechaNacimiento: String,
+  domicilio: String,
+  carrera: alumnoCarreraSchema,
+  materias: [alumnoMateriaSchema]
+});
+
+const Alumno = Mongoose.model('Alumno', alumnoSchema);
+
+/*const AlumnoSchema = new Mongoose.Schema({
     nombre: String,
     fechaNacimiento: String,
     domicilio: String,
@@ -50,8 +89,12 @@ const AlumnoSchema = new Mongoose.Schema({
             ref:    MateriaSchema
         }
     ]
-});
+});*/
  
-module.exports.CarreraModel = Mongoose.model("Carrera", CarreraSchema);
+/*module.exports.CarreraModel = Mongoose.model("Carrera", CarreraSchema);
 module.exports.MateriaModel = Mongoose.model("Materia", MateriaSchema);
-module.exports.AlumnoModel  = Mongoose.model("Alumno", AlumnoSchema);
+module.exports.AlumnoModel  = Mongoose.model("Alumno", AlumnoSchema);*/
+
+module.exports.CarreraModel = Carrera;
+module.exports.MateriaModel = Materia;
+module.exports.AlumnoModel  = Alumno;

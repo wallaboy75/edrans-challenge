@@ -3,7 +3,7 @@ var MateriaModel = require("../models/models").MateriaModel;
 var router = function(app) {
  
     app.get("/materias", function(request, response) {
-        MateriaModel.find({}).populate("alumnoss").then(function(result) {
+        MateriaModel.find({}).populate("alumnos").then(function(result) {
             response.send(result);
         }, function(error) {
             response.status(401).send({ "success": false, "message": error});
@@ -18,7 +18,7 @@ var router = function(app) {
         });
     });
  
-    app.post("/materias", function(request, response) {
+    app.post("/materia", function(request, response) {
         var materia = new MateriaModel({
             "nombre": request.body.nombre,
             "cargaOraria": request.body.cargaOraria

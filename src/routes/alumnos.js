@@ -20,7 +20,7 @@ const router = function(app) {
         });
     });
  
-    app.post("/alumnos", function(request, response) {
+    app.post("/alumno", function(request, response) {
         const alumno = new AlumnoModel({
             "nombre": request.body.nombre,
             "fechaNacimiento": request.body.fechaNacimiento,
