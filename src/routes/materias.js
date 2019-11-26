@@ -41,7 +41,7 @@ var router = function(app) {
     });
  
     app.put("/materia/:id", function(request, response) {
-        CarreraModel.findByIdAndUpdate(
+        MateriaModel.findByIdAndUpdate(
             request.params.id, 
             {$set: request.body},
             function(error, materia) {
@@ -52,6 +52,18 @@ var router = function(app) {
             }
         );
     });
+
+    app.delete("/materia/:id", function(request, response) {
+        MateriaModel.findByIdAndRemove(
+            request.params.id, 
+            function (error) {
+                if(error) {
+                    return response.status(401).send({ "success": false, "message": error});
+                }
+                response.send('Materia Deleted successfully!');
+            }
+        );
+    })
 }
  
 module.exports = router;
