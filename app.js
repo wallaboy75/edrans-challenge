@@ -12,7 +12,7 @@ const alumnoRoutes 	= require("./src/routes/alumnos")(app);
 
 const PORT = 8080;
 
-Mongoose.connect("mongodb://localhost:27017/example", function(error, database) {
+Mongoose.connect("mongodb://localhost:27017/example", { useNewUrlParser: true }, function(error, database) {
     if(error) {
         return console.log("Could not establish a connection to MongoDB");
     }

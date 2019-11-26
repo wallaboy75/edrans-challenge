@@ -1,6 +1,6 @@
-var CarreraModel = require("../models/models").CarreraModel;
+let CarreraModel = require("../models/models").CarreraModel;
  
-var router = function(app) {
+let router = function(app) {
  
     app.get("/carreras", function(request, response) {
         CarreraModel.find({}).populate("materias").then(function(result) {
@@ -19,9 +19,10 @@ var router = function(app) {
     });
  
     app.post("/carrera", function(request, response) {
-        var carrera = new CarreraModel({
+        let carrera = new CarreraModel({
             "nombre": request.body.nombre,
-            "tituloOtorgado": request.body.tituloOtorgado
+            "tituloOtorgado": request.body.tituloOtorgado,
+            "materias": request.body.materias
         });
         carrera.save(function(error, carrera) {
             if(error) {
@@ -30,7 +31,31 @@ var router = function(app) {
             response.send(carrera);
         });
     });
- 
+    
+    app.put("/carrera/:id", function(request, response) {
+        CarreraModel.findByIdAndUpdate(
+            request.params.id, 
+            {$set: request.body},
+            function(error, carrera) {
+                if(error) {
+                    return response.status(401).send({ "success": false, "message": error});
+                }
+                response.send(carrera);
+            }
+        );
+    });
+
+    app.delete("/carrera/:id", function(request, response) {
+        CarreraModel.findByIdAndRemove(
+            request.params.id, 
+            function (error) {
+                if(error) {
+                    return response.status(401).send({ "success": false, "message": error});
+                }
+                response.send('Deleted successfully!');
+            }
+        );
+    })
 }
  
 module.exports = router;
