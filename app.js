@@ -9,6 +9,7 @@ Mongoose.Promise = Promise;
 const carreraRoutes = require("./src/routes/carreras")(app);
 const materiaRoutes = require("./src/routes/materias")(app);
 const alumnoRoutes 	= require("./src/routes/alumnos")(app);
+const cursadaRoutes = require("./src/routes/cursadas")(app);
 
 const PORT = 8080;
 

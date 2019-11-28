@@ -45,6 +45,19 @@ let router = function(app) {
         );
     });
 
+    app.put("/carrera/:carreraId/materia/:materiaId", function(request, response) {
+        CarreraModel.findByIdAndUpdate(
+            request.params.carreraId, 
+            {$set: request.body},
+            function(error, carrera) {
+                if(error) {
+                    return response.status(401).send({ "success": false, "message": error});
+                }
+                response.send(carrera);
+            }
+        );
+    });
+
     app.delete("/carrera/:id", function(request, response) {
         CarreraModel.findByIdAndRemove(
             request.params.id, 
