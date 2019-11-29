@@ -1,8 +1,25 @@
 LEVANTAR EL PROYECTO:
-docker-compose up
+docker-compose up --build
 
-COLECCION POSTMAN
+levanta en: localhost:8080  
+
+Endpoints
+/carreras (GET)
+/materias (GET)
+/alumnos  (GET)
+
+/carrera/id (GET, PUT)
+/materia/id (GET, PUT)
+/alumno/id (GET, PUT)
+
+/carrera  (POST)
+/materia  (POST)
+/alumno   (POST)
+
+Los ejemplos estan en esta COLECCION POSTMAN 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/113949f7938db29e2744)
+
+
 
 OBJETIVO DEL PROYECTO:
 Challenge Backend
