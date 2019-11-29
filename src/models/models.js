@@ -36,16 +36,6 @@ const MateriaSchema = new Schema({
 });
 const Materia = Mongoose.model('Materia', MateriaSchema);
 
-const CursadaSchema = new Schema({
-    materia: { 
-        type: ObjectId, 
-        ref: 'Materia' 
-    },
-    estadoCursado: String,
-    notaObtenida: Number
-});
-const Cursada = Mongoose.model('Cursada', CursadaSchema);
-
 const alumnoSchema = new Schema({
     nombre: String,
     fechaNacimiento: String,
@@ -56,8 +46,12 @@ const alumnoSchema = new Schema({
     },
     materias: [
         {
-            type: ObjectId,
-            ref: "Cursada"
+            materiaId: {
+                type: ObjectId,
+                ref: "Materia"
+            },
+            estadoCursado: String,
+            notaObtenida: Number
         }
     ]
 });
@@ -66,4 +60,3 @@ const Alumno = Mongoose.model('Alumno', alumnoSchema);
 module.exports.CarreraModel = Carrera;
 module.exports.MateriaModel = Materia;
 module.exports.AlumnoModel  = Alumno;
-module.exports.CursadaModel = Cursada;

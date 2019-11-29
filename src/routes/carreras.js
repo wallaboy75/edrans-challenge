@@ -1,4 +1,5 @@
 let CarreraModel = require("../models/models").CarreraModel;
+let MateriaModel = require("../models/models").MateriaModel;
  
 let router = function(app) {
  
@@ -21,8 +22,7 @@ let router = function(app) {
     app.post("/carrera", function(request, response) {
         let carrera = new CarreraModel({
             "nombre": request.body.nombre,
-            "tituloOtorgado": request.body.tituloOtorgado,
-            "materias": request.body.materias
+            "tituloOtorgado": request.body.tituloOtorgado
         });
         carrera.save(function(error, carrera) {
             if(error) {
@@ -36,22 +36,19 @@ let router = function(app) {
         CarreraModel.findByIdAndUpdate(
             request.params.id, 
             {$set: request.body},
+            {new: true},
             function(error, carrera) {
                 if(error) {
                     return response.status(401).send({ "success": false, "message": error});
                 }
-                response.send(carrera);
-            }
-        );
-    });
-
-    app.put("/carrera/:carreraId/materia/:materiaId", function(request, response) {
-        CarreraModel.findByIdAndUpdate(
-            request.params.carreraId, 
-            {$set: request.body},
-            function(error, carrera) {
-                if(error) {
-                    return response.status(401).send({ "success": false, "message": error});
+                if (request.body.materias) {
+                    request.body.materias.forEach(materiaId => {
+                            MateriaModel.findById(materiaId, function (err, materia) {
+                                materia.carreras.push(request.params.id);
+                                materia.save();
+                            });
+                        }
+                    )
                 }
                 response.send(carrera);
             }
